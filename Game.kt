@@ -8,18 +8,39 @@ class Game {
     fun run() {
         println("${players[0].name} VS ${players[1].name}")
         println("${boardHandler.board.dimensions.rows} X ${boardHandler.board.dimensions.columns} board")
-        while (gameStatus != GameStatus.END) {
-            boardHandler.printBoard()
-            when (gameStatus) {
-                GameStatus.NEXT -> makeNextMove()
-                else -> {}
+        makeNextMove()
+        printEndMessage()
+    }
+
+    private fun printEndMessage() {
+        when (gameStatus) {
+            GameStatus.WON -> {
+                boardHandler.printBoard()
+                println("Player ${players[getAnotherPlayerIndex(activePlayerIndex)].name} won")
             }
-            gameStatus = if (gameStatus == GameStatus.END) gameStatus else boardHandler.getStatus()
+            GameStatus.DRAW -> {
+                boardHandler.printBoard()
+                println("It is a draw")
+            }
+            else -> {}
         }
         println("Game over!")
     }
 
     private fun makeNextMove() {
+        while (gameStatus == GameStatus.NEXT) {
+            boardHandler.printBoard()
+            throwNextDisk()
+            if (gameStatus == GameStatus.NEXT) {
+                activePlayerIndex = getAnotherPlayerIndex(activePlayerIndex)
+                gameStatus = boardHandler.getStatus()
+            }
+        }
+    }
+
+    private fun getAnotherPlayerIndex(playerIndex: Int) = (playerIndex + 1) % 2
+
+    private fun throwNextDisk() {
         while (true) {
             try {
                 println("${players[activePlayerIndex].name}'s turn:")
@@ -32,10 +53,12 @@ class Game {
 
                 if (isNotDigit(inputString)) throw RuntimeException("Incorrect column number")
 
-                val nextCoordinate = boardHandler.getNextCoordinateByColumn(inputString.toInt())
-                val discTypes = if (activePlayerIndex == 0) DiscTypes.FIRST else DiscTypes.SECOND
-                boardHandler.addDisc(Disc(discTypes, nextCoordinate))
-                activePlayerIndex = (activePlayerIndex + 1) % 2
+                boardHandler.addDisc(
+                    Disc(
+                        if (activePlayerIndex == 0) DiscTypes.FIRST else DiscTypes.SECOND,
+                        boardHandler.getNextCoordinateByColumn(inputString.toInt())
+                    )
+                )
 
                 break
             } catch (e: RuntimeException) {

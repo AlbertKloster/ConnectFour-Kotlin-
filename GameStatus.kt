@@ -1,5 +1,5 @@
 package connectfour
 
 enum class GameStatus {
-    NEXT, END
+    NEXT, END, WON, DRAW
 }
