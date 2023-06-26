@@ -33,7 +33,7 @@ Press Enter for default (6 x 7)
 > 8 x 8
 Sophia VS John
 8 X 8 board
-1 2 3 4 5 6 7 8
+ 1 2 3 4 5 6 7 8
 ║ ║ ║ ║ ║ ║ ║ ║ ║
 ║ ║ ║ ║ ║ ║ ║ ║ ║
 ║ ║ ║ ║ ║ ║ ║ ║ ║
@@ -57,7 +57,7 @@ Press Enter for default (6 x 7)
 >
 Sophia VS John
 6 X 7 board
-1 2 3 4 5 6 7
+ 1 2 3 4 5 6 7
 ║ ║ ║ ║ ║ ║ ║ ║
 ║ ║ ║ ║ ║ ║ ║ ║
 ║ ║ ║ ║ ║ ║ ║ ║
@@ -79,7 +79,7 @@ Press Enter for default (6 x 7)
 > 7 x 8
 Sophia VS John
 7 X 8 board
-1 2 3 4 5 6 7 8
+ 1 2 3 4 5 6 7 8
 | | | | | | | | |
 | | | | | | | | |
 | | | | | | | | |
