@@ -186,4 +186,8 @@ class BoardHandler(val board: Board) {
 
         return Coordinate(discsInColumn.maxOf { it.coordinate.row } + 1, column)
     }
+
+    fun clear() {
+        board.discs.clear()
+    }
 }

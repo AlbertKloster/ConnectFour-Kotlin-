@@ -25,4 +25,14 @@ class Input {
         return columns
     }
 
+    fun getGames(): Int {
+        val string = readln().trim()
+        if (string.isEmpty()) return 1
+        if (!string.matches(Regex("\\d+")))
+            throw RuntimeException("Invalid input")
+        if (string.toInt() < 1)
+            throw RuntimeException("Invalid input")
+        return string.toInt()
+    }
+
 }

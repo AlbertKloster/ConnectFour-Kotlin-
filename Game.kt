@@ -4,27 +4,44 @@ class Game {
     private var gameStatus = GameStatus.NEXT
     private val players = initPlayers()
     private val boardHandler = initBoardHandler()
+    private val games = initGames()
     private var activePlayerIndex = 0
+
     fun run() {
         println("${players[0].name} VS ${players[1].name}")
         println("${boardHandler.board.dimensions.rows} X ${boardHandler.board.dimensions.columns} board")
-        makeNextMove()
-        printEndMessage()
+        println(if (games > 1) "Total $games games" else "Single game")
+        for (gameNumber in 1..games) {
+            if (games > 1) println("Game #$gameNumber")
+            makeNextMove()
+            printEndMessage()
+            if (games > 1) printScore()
+            boardHandler.clear()
+            gameStatus = GameStatus.NEXT
+        }
+        println("Game over!")
+    }
+
+    private fun printScore() {
+        println("Score")
+        println("${players[0].name}: ${players[0].victories} ${players[1].name}: ${players[1].victories}")
     }
 
     private fun printEndMessage() {
         when (gameStatus) {
             GameStatus.WON -> {
                 boardHandler.printBoard()
+                players[getAnotherPlayerIndex(activePlayerIndex)].victories += 2
                 println("Player ${players[getAnotherPlayerIndex(activePlayerIndex)].name} won")
             }
             GameStatus.DRAW -> {
+                players[0].victories++
+                players[1].victories++
                 boardHandler.printBoard()
                 println("It is a draw")
             }
             else -> {}
         }
-        println("Game over!")
     }
 
     private fun makeNextMove() {
@@ -69,6 +86,19 @@ class Game {
     }
 
     private fun isNotDigit(inputString: String) = !inputString.matches(Regex("\\d+"))
+
+    private fun initGames(): Int {
+        while (true) {
+            try {
+                println("Do you want to play single or multiple games?")
+                println("For a single game, input 1 or press Enter")
+                println("Input a number of games:")
+                return input.getGames()
+            } catch (e: RuntimeException) {
+                println(e.message)
+            }
+        }
+    }
 
     private fun initPlayers(): List<Player> {
         println("Connect Four")
